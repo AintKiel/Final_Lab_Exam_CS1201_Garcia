@@ -94,7 +94,7 @@ class DiceGame(Score):
         scores = self.load_scores()
         scores.sort(key=lambda x: (x[1], x[2]), reverse=True)
 
-        print("\n\t\t\t****PLAYERS SCORES****")
+        print("\n\t\t\t\t****PLAYERS SCORES****")
         for i, (user_name, total_score, stage_win, date) in enumerate(scores[:10], start=1):
             print(f"Rank {i:<10} {user_name:<10}: \tSCORE  =  {total_score:<10} WINS = {stage_win:<10} Date & Time: {date:<10}")
 
