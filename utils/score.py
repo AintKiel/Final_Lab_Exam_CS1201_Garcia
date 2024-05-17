@@ -13,7 +13,7 @@ class Score:
     
     def load_score_date(self):
         try:
-            with open(self.score_file, 'r') as file:
+            with open(self.scores_file, 'r') as file:
                 return file.read()
         except FileNotFoundError:
             return None
