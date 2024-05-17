@@ -36,7 +36,7 @@ class DiceGame(Score):
             with open(self.scores_file, 'a') as file:
                 now = datetime.now()
                 score_date = now.strftime("%Y-%m-%d %H:%M:%S")
-                file.write(f'{score}, {user_name}, Achieved on: {score_date}\n')
+                file.write(f'{score}, {user_name}, Date & Time: {score_date}\n')
         except IOError:
             return print("\tAn error occurred while trying to save the score.")
 
@@ -49,13 +49,13 @@ class DiceGame(Score):
             cpu_num = random.randint(1,6)
 
             if user_num > cpu_num:
-                print(f"\tUser: {user_num}\n\tCPU: {cpu_num}\n\n\t***User Won!***\n")
+                print(f"\t{user_name}: {user_num}\n\tCPU: {cpu_num}\n\n\t***User Won!***\n")
                 user_score += 1
             elif user_num < cpu_num:
-                print(f"\tUser: {user_num}\n\tCPU: {cpu_num}\n\n\t***CPU Won!***\n")
+                print(f"\t{user_name}: {user_num}\n\tCPU: {cpu_num}\n\n\t***CPU Won!***\n")
                 cpu_score += 1
             else:
-                print(f"\n\tUser: {user_num}\n\tCPU: {cpu_num}\n\n\t***DRAW!***\n")
+                print(f"\n\t{user_name}: {user_num}\n\tCPU: {cpu_num}\n\n\t***DRAW!***\n")
 
         if user_score > cpu_score:
             user_score += 3
@@ -64,10 +64,10 @@ class DiceGame(Score):
 
         self.savescore(user_name, save_user_scores)
 
-        print(f"Game Over! {user_name}'s score: {user_score}, \tCPU's score: {cpu_score}")
+        print(f"\tGame Over! \t\n{user_name}'s score: {user_score}, \tCPU's score: {cpu_score}")
 
         while True:
-            continue_game = input("\n\tPlay Again? (y/n): ")
+            continue_game = input("\n\tRoll Again (y/n): ")
 
             if continue_game.lower() == 'y':
                 self.play_game(user_name)
@@ -81,16 +81,14 @@ class DiceGame(Score):
         scores = self.load_scores()
         scores.sort(key=lambda x: x[1], reverse=True)
 
-        print("\n\t\t\t****PLAYERS SCORES****")
-
-        print(f'{"\n\tRanking":<10} {"Username":<10} {"Score":<10} {"\t\tDate":<10}')
-
+        print("\n\t\t****PLAYERS SCORES****")
+        
         for i in range(10): 
             if i < len(scores):
                 user_name, score, date = scores[i]
-                print(f'\t{i+1:<10} {user_name:<10} {score:<10} {date:<10}')
-            else:
-                print(f"{i+1:<10}****")
+                print(f"Rank {i+1:<10} {user_name:<10}: \tSCORE  =  {score:<10} {date:<10}")
+            else: 
+                print(f"{i+1:<10}")
 
     def menu(self, user_name):
         print(f"\n****Welcome to Dice Roll Game {user_name}!****")
@@ -105,5 +103,11 @@ class DiceGame(Score):
             elif choice == '2':
                 self.show_top_scores()
             elif choice == '3':
-                print("\n\tLogging out. Thanks for playing...\n")
-                self.menu(user_name)
+                print("\n\tAre you sure you want to Log-out? (y/n): \n")
+                choice = input("\n\tChoice: ")
+                if choice == 'y':
+                    print("\n\tLogging out.....")
+                    return 
+                else:
+                    print("Invalid input. Please try again.")
+                
